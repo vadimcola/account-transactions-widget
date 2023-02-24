@@ -46,3 +46,25 @@ def payment_invoice(list_transaction: list) -> str:
                             f' {account_number[4:6]}** **** **** {account_number[-4:]}'
 
     return number_output
+
+
+def payment_to(list_transaction: list) -> str:
+    '''
+    функция выводит на какой счет был осуществлен перевод
+    :param list_transaction:
+    :return: выводит счет в зашифрованном виде
+    '''
+    payment = list_transaction['to']
+    account_number = payment.split()[1]
+    return f'{payment.split()[0]} **{account_number[-4:]}'
+
+
+def amount_currency(list_transaction: list) -> str:
+    '''
+    функция выводит суммы перевода и валюту
+    :param list_transaction: список транзакций
+    :return:
+    '''
+    amount = list_transaction['operationAmount']['amount']
+    currency = list_transaction['operationAmount']['currency']['name']
+    return f"{amount} {currency}"
