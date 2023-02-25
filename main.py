@@ -3,12 +3,25 @@ from utils.utils import load_data, transaction_date, payment_invoice, payment_to
 # импортируем необходимые модули
 from operator import itemgetter
 
-# задаем констатну с ссылкой на банковскую выписку
-BANK_STATEMENT_URL = "https://api.npoint.io/7e0408563a1ef990bc71"
+# создаем константу с сылкой на файл jeson
+BANK_STATEMENT_URL = "https://api.npoint.io/84633d18dad22794d84b"
 
-# делаем сортировку списка словорей по определеным данным а также выводим первые пять словорей
-transaction = sorted(load_data(BANK_STATEMENT_URL), key=itemgetter('date'), reverse=True)
+# создаем пустой список
+transaction_no_sort = []
 
+# в цикле вызываем фурнкцию и перебараем её
+for i in load_data(BANK_STATEMENT_URL):
+
+    # если в списке есть пустой словарь то его пропускаем
+    # остольные словори добавляем в пустой список
+    if i == {}:
+        continue
+    transaction_no_sort.append(i)
+
+# сортируем список с словорями по заданному условию
+transaction = sorted(transaction_no_sort, key=itemgetter('date'), reverse=True)
+
+# создаем счетчик
 counter = 0
 
 # запускаем цикл перебераем словори в списке
@@ -18,9 +31,7 @@ for list_transaction in transaction:
     if list_transaction['state'] == 'CANCELED':
         continue
 
-    if list_transaction is None:
-        continue
-
+    # если счетчик меньше 5 то выводим сообщение
     if counter < 5:
         counter += 1
         # если транзакция было открытием вклада то выводим сообщение с открытием вклада
@@ -37,5 +48,7 @@ for list_transaction in transaction:
 
         # добавляем один пробел между каждым выводом
         print()
+
+    # если счетчик больше или равен 5 то цикл останавливаем
     else:
         break
