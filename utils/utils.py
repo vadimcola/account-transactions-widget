@@ -35,7 +35,7 @@ def payment_invoice(list_transaction: list) -> str:
     if len(payment.split()) == 3:
         account_number = payment.split()[2]
         number_output = f'{" ".join(payment.split()[0:2])} {account_number[:4]}' \
-                        f' {account_number[4:6]}** **** {account_number[-4:]} '
+                        f' {account_number[4:6]}** **** {account_number[-4:]}'
     elif len(payment.split()) == 2:
         account_number = payment.split()[1]
         if len(payment.split()[1]) == 16:
