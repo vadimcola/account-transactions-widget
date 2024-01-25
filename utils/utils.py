@@ -1,15 +1,16 @@
 import requests
 import time
+import json
 
 
-def load_data(path):
+def load_data(filename):
     """
     выгрузка данных из файла
 
     """
-    data = requests.get(path)
-    data_ = data.json()
-    return data_
+    with open(filename, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+        return data
 
 
 def transaction_date(list_transaction: list) -> str:
